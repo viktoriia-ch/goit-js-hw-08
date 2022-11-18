@@ -7,20 +7,24 @@ const KEY_STORAGE = 'videoplayer-current-time';
 const iframe = document.querySelector('#vimeo-player');
 const player = new Player(iframe);
 
-player.on('timeupdate', throttle(saveCntTimeInLocalStorage, 1000));
-player.setCurrentTime(getCntTime());
+player.on('timeupdate', throttle(saveCurrentTimeInLocalStorage, 1000));
+player.setCurrentTime(getCurrentTime());
 
 // FUNFIONS
-function saveCntTimeInLocalStorage(e) {
+function saveCurrentTimeInLocalStorage(evt) {
   const stringify = JSON.stringify({
-    seconds: e.seconds,
+    seconds: evt.seconds,
   });
 
   localStorage.setItem(KEY_STORAGE, stringify);
 }
 
-function getCntTime() {
+function getCurrentTime() {
   const currentTime = localStorage.getItem(KEY_STORAGE);
-  const parsedCntTime = JSON.parse(currentTime);
-  return parsedCntTime ? parsedCntTime.seconds : 0;
+  // console.log(currentTime);
+
+  const parsedCurrentTime = JSON.parse(currentTime);
+  // console.log(parsedCurrentTime);
+
+  return parsedCurrentTime ? parsedCurrentTime.seconds : 0;
 }

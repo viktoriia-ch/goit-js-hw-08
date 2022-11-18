@@ -2,19 +2,28 @@
 import { galleryItems } from './gallery-items';
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
-import { createGalleryMarkup } from './createGalleryMarkup';
+
 // Change code below this line
 
 // console.log(galleryItems);
-// console.log(SimpleLightbox);
 
 const galleryRef = document.querySelector('.gallery');
 
 galleryRef.insertAdjacentHTML('beforeend', createGalleryMarkup(galleryItems));
 galleryRef.addEventListener('click', openOriginalImage);
+
 createLightbox();
 
 // === FUNCTIONS
+function createGalleryMarkup(items) {
+  return items
+    .map(
+      item => `<a class="gallery__link" href="${item.original}">
+        <img class="gallery__image" src="${item.preview}" alt="${item.description}"/>
+        </a>`
+    )
+    .join('');
+}
 
 function openOriginalImage(evt) {
   evt.preventDefault();

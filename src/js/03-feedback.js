@@ -5,28 +5,28 @@ const form = document.querySelector('.feedback-form');
 
 const KEY_STORAGE = 'feedback-form-state';
 
-// FUNCTIONS
-
+// ARROW FUNCTIONS
 const onFormInput = evt => {
   const form = evt.target.closest('form');
   const { email, message } = form.elements;
-  const objData = {
+
+  const formData = {
     email: email.value,
     message: message.value,
   };
 
-  localStorage.setItem(KEY_STORAGE, JSON.stringify(objData));
+  localStorage.setItem(KEY_STORAGE, JSON.stringify(formData));
 };
 
 const onFormSubmit = evt => {
   evt.preventDefault();
-  const { email, message } = evt.currentTarget.elements;
-  const objData = {
-    email: email.value,
-    message: message.value,
-  };
 
-  console.log(objData);
+  const formData = new FormData(evt.currentTarget);
+
+  formData.forEach((message, email) => {
+    console.log(`${email}: ${message}`);
+  });
+
   localStorage.removeItem(KEY_STORAGE);
   form.reset();
 };
