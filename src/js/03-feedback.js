@@ -1,5 +1,5 @@
 // IMPORT
-// import throttle from 'lodash.throttle';
+import throttle from 'lodash.throttle';
 
 const form = document.querySelector('.feedback-form');
 
@@ -8,7 +8,8 @@ const KEY_STORAGE = 'feedback-form-state';
 // FUNCTIONS
 
 const onFormInput = evt => {
-  const { email, message } = evt.currentTarget.elements;
+  const form = evt.target.closest('form');
+  const { email, message } = form.elements;
   const objData = {
     email: email.value,
     message: message.value,
@@ -42,5 +43,5 @@ const getObjData = () => {
 
 getObjData();
 
-form.addEventListener('input', onFormInput);
+form.addEventListener('input', throttle(onFormInput, 500));
 form.addEventListener('submit', onFormSubmit);
